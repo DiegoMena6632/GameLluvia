@@ -14,37 +14,38 @@ import com.badlogic.gdx.utils.ScreenUtils;
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends ApplicationAdapter {
 	private OrthographicCamera camera;
-	   private SpriteBatch batch;	   
-	   private BitmapFont font;
+	private SpriteBatch batch;	   
+	private BitmapFont font;
 	   
-	   private Tarro tarro;
-	   private Lluvia lluvia;
+	private Tarro tarro;
+	private Lluvia lluvia;
 	@Override
-	public void create () {
-		 font = new BitmapFont(); // use libGDX's default Arial font
+	public void create ()
+	{
+		font = new BitmapFont(); // use libGDX's default Arial font
 		 
-		  // load the images for the droplet and the bucket, 64x64 pixels each 	     
-		  Sound hurtSound = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
-		  tarro = new Tarro(new Texture(Gdx.files.internal("bucket.png")),hurtSound);
+		// load the images for the droplet and the bucket, 64x64 pixels each 	     
+		Sound hurtSound = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
+		tarro = new Tarro(new Texture(Gdx.files.internal("bucket.png")),hurtSound);
        
-	      // load the drop sound effect and the rain background "music" 
-       Texture gota = new Texture(Gdx.files.internal("drop.png"));
-       Texture gotaMala = new Texture(Gdx.files.internal("dropBad.png"));
+	    // load the drop sound effect and the rain background "music" 
+		Texture gota = new Texture(Gdx.files.internal("drop.png"));
+        Texture gotaMala = new Texture(Gdx.files.internal("dropBad.png"));
        
-       Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
+        Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
       
-	      Music rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
-       lluvia = new Lluvia(gota, gotaMala, dropSound, rainMusic);
+	    Music rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
+        lluvia = new Lluvia(gota, gotaMala, dropSound, rainMusic);
 	      
-	      // camera
-	      camera = new OrthographicCamera();
-	      camera.setToOrtho(false, 800, 480);
-	      batch = new SpriteBatch();
-	      // creacion del tarro
-	      tarro.crear();
+	    // camera
+	    camera = new OrthographicCamera();
+	    camera.setToOrtho(false, 800, 480);
+	    batch = new SpriteBatch();
+	    // creacion del tarro
+	    tarro.crear();
 	      
-	      // creacion de la lluvia
-	      lluvia.crear();
+	    // creacion de la lluvia
+	    lluvia.crear();
 	}
 	
 
