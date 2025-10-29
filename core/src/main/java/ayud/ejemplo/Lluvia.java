@@ -9,90 +9,86 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import java.util.Iterator;
 
 public class Lluvia {
-	private Array<Rectangle> rainDropsPos;
-	private Array<Integer> rainDropsType;
+	private Array<Droppable> objetosCayendo;
     private long lastDropTime;
-    private Texture gotaBuena;
-    private Texture gotaMala;
     private Sound dropSound;
     private Music rainMusic;
+    private Tarro tarro; // Referencia al Tarro
 	   
-	public Lluvia(Texture gotaBuena, Texture gotaMala, Sound ss, Music mm) {
+	public Lluvia(Tarro tarro, Sound ss, Music mm) {
+		this.tarro = tarro;
 		rainMusic = mm;
 		dropSound = ss;
-		this.gotaBuena = gotaBuena;
-		this.gotaMala = gotaMala;
 	}
 	
 	public void crear() {
-		rainDropsPos = new Array<Rectangle>();
-		rainDropsType = new Array<Integer>();
+		// Inicializamos el Array con el tipo abstracto Droppable
+		objetosCayendo = new Array<>(); 
 		crearGotaDeLluvia();
-	      // start the playback of the background music immediately
-	      rainMusic.setLooping(true);
-	      rainMusic.play();
+	    rainMusic.setLooping(true);
+	    rainMusic.play();
 	}
 	
 	private void crearGotaDeLluvia() {
-	      Rectangle raindrop = new Rectangle();
-	      raindrop.x = MathUtils.random(0, 800-64);
-	      raindrop.y = 480;
-	      raindrop.width = 64;
-	      raindrop.height = 64;
-	      rainDropsPos.add(raindrop);
-	      // ver el tipo de gota
-	      if (MathUtils.random(1,10)<3)	    	  
-	         rainDropsType.add(1);
-	      else 
-	    	 rainDropsType.add(2);
-	      lastDropTime = TimeUtils.nanoTime();
-	   }
+		float x = MathUtils.random(0, 800 - 64);
+	    float y = 480;
+	    float velocidad = 300; // Velocidad de caída
+	      
+	    // Creamos el objeto CONCRETO y lo guardamos como ABSTRACTO (Droppable)
+	    if (MathUtils.random(1, 10) < 3) {	    	  
+	        objetosCayendo.add(new GotaMala(x, y, velocidad));
+	    } else { 
+	        objetosCayendo.add(new GotaBuena(x, y, dropSound, velocidad));
+	    }
+	    lastDropTime = TimeUtils.nanoTime();
+	}
 	
    public void actualizarMovimiento(Tarro tarro) { 
-	   // generar gotas de lluvia 
+	   // Generar gotas de lluvia 
 	   if(TimeUtils.nanoTime() - lastDropTime > 100000000) crearGotaDeLluvia();
 	  
-	   
-	   // revisar si las gotas cayeron al suelo o chocaron con el tarro
-	   for (int i=0; i < rainDropsPos.size; i++ ) {
-		  Rectangle raindrop = rainDropsPos.get(i);
-	      raindrop.y -= 300 * Gdx.graphics.getDeltaTime();
-	      //cae al suelo y se elimina
-	      if(raindrop.y + 64 < 0) {
-	    	  rainDropsPos.removeIndex(i); 
-	    	  rainDropsType.removeIndex(i);
+	// Iterador usando la clase abstracta Droppable
+	   Iterator<Droppable> iter = objetosCayendo.iterator();
+	   while (iter.hasNext()) {
+		  Droppable objeto = iter.next();
+	      
+		  // Movimiento
+	      objeto.mover();
+	      
+	      // Si cae al suelo y se elimina
+	      if(objeto.getBounds().y + 64 < 0) {
+	    	  objeto.dispose(); 
+	    	  iter.remove(); 
 	      }
-	      if(raindrop.overlaps(tarro.getArea())) { //la gota choca con el tarro
-	    	if(rainDropsType.get(i)==1) { // gota dañina
-	    	  tarro.dañar();
+	      
+	      // Si el objeto choca con el tarro
+	      if(objeto.getBounds().overlaps(tarro.getArea())) { 
 	    	  
-	    	  rainDropsPos.removeIndex(i);
-	          rainDropsType.removeIndex(i);
-	      	}else { // gota a recolectar
-	    	  tarro.sumarPuntos(10);
-	          dropSound.play();
-	          rainDropsPos.removeIndex(i);
-	          rainDropsType.removeIndex(i);
-	      	}
+	    	// POLIMORFISMO: Se llama a aplicarEfecto(tarro)
+	    	objeto.aplicarEfecto(tarro);
+	          
+	    	objeto.dispose();
+	        iter.remove();
 	      }
-	   }   
+	   }
    }
    
    public void actualizarDibujoLluvia(SpriteBatch batch) { 
 	   
-	  for (int i=0; i < rainDropsPos.size; i++ ) {
-		  Rectangle raindrop = rainDropsPos.get(i);
-		  if(rainDropsType.get(i)==1) // gota dañina
-	         batch.draw(gotaMala, raindrop.x, raindrop.y); 
-		  else
-			 batch.draw(gotaBuena, raindrop.x, raindrop.y); 
-	   }
+	   for (Droppable objeto : objetosCayendo) {
+		      objeto.dibujar(batch); 
+		  }
    }
    public void destruir() {
 	      dropSound.dispose();
 	      rainMusic.dispose();
+	      
+	      for (Droppable objeto : objetosCayendo) {
+	          objeto.dispose();
+	      }
    }
    
 }
