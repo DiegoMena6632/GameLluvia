@@ -29,13 +29,13 @@ public class Main extends ApplicationAdapter {
 		tarro = new Tarro(new Texture(Gdx.files.internal("bucket.png")),hurtSound);
        
 	    // load the drop sound effect and the rain background "music" 
-		Texture gota = new Texture(Gdx.files.internal("drop.png"));
-        Texture gotaMala = new Texture(Gdx.files.internal("dropBad.png"));
+		//Texture gota = new Texture(Gdx.files.internal("drop.png"));
+        //Texture gotaMala = new Texture(Gdx.files.internal("dropBad.png"));
        
         Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
       
 	    Music rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
-        lluvia = new Lluvia(gota, gotaMala, dropSound, rainMusic);
+        lluvia = new Lluvia(tarro, dropSound, rainMusic);
 	      
 	    // camera
 	    camera = new OrthographicCamera();
