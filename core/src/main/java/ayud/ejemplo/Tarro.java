@@ -84,16 +84,22 @@ public class Tarro {
 	   }
 	   
 	   public void setPowerUp(Potenciador newPowerUp) {
-           // 1. Revertir el anterior si existe (el revertir maneja el sonido de fin)
-           if (this.actualPowerUp != null) {
-               this.actualPowerUp.revertir(this); 
-           }
-           // 2. Asignar el nuevo y aplicarlo
-           this.actualPowerUp = newPowerUp;
-           this.actualPowerUp.aplicar(this);
-       }
+		   // 1. Revertir el anterior si existe
+		    if (this.actualPowerUp != null) {
+		        this.actualPowerUp.revertir(this); 
+		    }
+		    
+		    // 2. Asignar el nuevo
+		    this.actualPowerUp = newPowerUp;
+		    
+		    // 3. ¡SOLO aplicar si NO es NULL
+		    if (this.actualPowerUp != null) { 
+		        this.actualPowerUp.aplicar(this);
+		    }
+		}
 	   
 	   public void dañar() {
+		   if(this.inmune) {return;}
 		  vidas--;
 		  herido = true;
 		  tiempoHerido=tiempoHeridoMax;

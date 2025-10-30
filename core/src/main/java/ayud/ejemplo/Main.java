@@ -70,19 +70,19 @@ public class Main extends ApplicationAdapter {
 		batch.begin();
 		
 		Potenciador currentPU = tarro.getActualPowerUp();
-	    if (currentPU != null) {
-	        // 1. Actualizar el tiempo del potenciador en cada frame
-	        currentPU.actualizar(Gdx.graphics.getDeltaTime());
-	        
-	        // 2. Revisar si ha expirado
-	        if (currentPU.haExpirado()) {
-	            // El método revertir ya está programado para restaurar el estado y reproducir sonido
-	            currentPU.revertir(tarro);
-	            
-	            // 3. Anular la referencia: MUY IMPORTANTE
-	            tarro.setPowerUp(null); // Esto anula el power-up sin volver a llamar a revertir()
-	        }
-	    }
+		if (currentPU != null) {
+		    // 1. Reduce el tiempo restante del power-up
+		    currentPU.actualizar(Gdx.graphics.getDeltaTime()); 
+		    
+		    // 2. Verifica si el tiempo ya llegó a cero
+		    if (currentPU.haExpirado()) { 
+		        // Llama a la lógica de terminación
+		        currentPU.revertir(tarro); 
+		        
+		        // Finaliza el power-up en el Tarro (limpia la referencia)
+		        tarro.setPowerUp(null); 
+		    }
+		}
 		
 		//dibujar textos
 		font.draw(batch, "Gotas totales: " + tarro.getPuntos(), 5, 475);
