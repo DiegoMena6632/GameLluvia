@@ -16,6 +16,11 @@ public class Main extends ApplicationAdapter {
 	private OrthographicCamera camera;
 	private SpriteBatch batch;	   
 	private BitmapFont font;
+	
+	private Sound shieldStartSound;
+    private Sound shieldEndSound;
+    private Sound speedStartSound;
+    private Sound speedEndSound;
 	   
 	private Tarro tarro;
 	private Lluvia lluvia;
@@ -26,7 +31,11 @@ public class Main extends ApplicationAdapter {
 		 
 		// load the images for the droplet and the bucket, 64x64 pixels each 	     
 		Sound hurtSound = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
-		tarro = new Tarro(new Texture(Gdx.files.internal("bucket.png")),hurtSound);
+		shieldStartSound = Gdx.audio.newSound(Gdx.files.internal("shield_start.mp3"));
+        shieldEndSound = Gdx.audio.newSound(Gdx.files.internal("shield_end.mp3"));
+        speedStartSound = Gdx.audio.newSound(Gdx.files.internal("speed_start.mp3"));
+        speedEndSound = Gdx.audio.newSound(Gdx.files.internal("speed_end.mp3"));
+		tarro = new Tarro(new Texture(Gdx.files.internal("bucket.png")),hurtSound, shieldEndSound, speedEndSound);
        
 	    // load the drop sound effect and the rain background "music" 
 		//Texture gota = new Texture(Gdx.files.internal("drop.png"));
@@ -35,7 +44,7 @@ public class Main extends ApplicationAdapter {
         Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
       
 	    Music rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
-        lluvia = new Lluvia(tarro, dropSound, rainMusic);
+        lluvia = new Lluvia(tarro, dropSound, rainMusic, shieldStartSound, speedStartSound);
 	      
 	    // camera
 	    camera = new OrthographicCamera();
@@ -59,6 +68,22 @@ public class Main extends ApplicationAdapter {
 		//actualizar 
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
+		
+		Potenciador currentPU = tarro.getActualPowerUp();
+	    if (currentPU != null) {
+	        // 1. Actualizar el tiempo del potenciador en cada frame
+	        currentPU.actualizar(Gdx.graphics.getDeltaTime());
+	        
+	        // 2. Revisar si ha expirado
+	        if (currentPU.haExpirado()) {
+	            // El método revertir ya está programado para restaurar el estado y reproducir sonido
+	            currentPU.revertir(tarro);
+	            
+	            // 3. Anular la referencia: MUY IMPORTANTE
+	            tarro.setPowerUp(null); // Esto anula el power-up sin volver a llamar a revertir()
+	        }
+	    }
+		
 		//dibujar textos
 		font.draw(batch, "Gotas totales: " + tarro.getPuntos(), 5, 475);
 		font.draw(batch, "Vidas : " + tarro.getVidas(), 720, 475);
@@ -83,5 +108,9 @@ public class Main extends ApplicationAdapter {
        lluvia.destruir();
 	      batch.dispose();
 	      font.dispose();
+	      shieldStartSound.dispose();
+          shieldEndSound.dispose();
+          speedStartSound.dispose();
+          speedEndSound.dispose();
 	}
 }

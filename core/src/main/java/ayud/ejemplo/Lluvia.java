@@ -17,11 +17,15 @@ public class Lluvia {
     private Sound dropSound;
     private Music rainMusic;
     private Tarro tarro; // Referencia al Tarro
+    private Sound shieldStartSound;
+    private Sound speedStartSound;
 	   
-	public Lluvia(Tarro tarro, Sound ss, Music mm) {
+	public Lluvia(Tarro tarro, Sound ss, Music mm, Sound shieldStartSound, Sound speedStartSound) {
 		this.tarro = tarro;
 		rainMusic = mm;
 		dropSound = ss;
+		this.shieldStartSound = shieldStartSound;
+        this.speedStartSound = speedStartSound;
 	}
 	
 	public void crear() {
@@ -37,9 +41,14 @@ public class Lluvia {
 	    float y = 480;
 	    float velocidad = 300; // Velocidad de caída
 	      
-	    // Creamos el objeto CONCRETO y lo guardamos como ABSTRACTO (Droppable)
-	    if (MathUtils.random(1, 10) < 3) {	    	  
+	    int tipo = MathUtils.random(1, 25); // Probabilidad de Power-up: 1 de cada 15 (aprox 6.6%)
+	      
+	    if (tipo < 3) {	    	  
 	        objetosCayendo.add(new GotaMala(x, y, velocidad));
+	    } else if (tipo == 24) { // Gota de Escudo
+	        objetosCayendo.add(new GotaEscudo(x, y, velocidad, shieldStartSound));
+        } else if (tipo == 25) { // Gota de SuperVelocidad
+	        objetosCayendo.add(new GotaSuperVelocidad(x, y, velocidad, speedStartSound));
 	    } else { 
 	        objetosCayendo.add(new GotaBuena(x, y, dropSound, velocidad));
 	    }

@@ -16,14 +16,27 @@ public class Tarro {
 	   private int vidas = 3;
 	   private int puntos = 0;
 	   private int velx = 400;
+	   private final int VELX_ORIGINAL = 400;
 	   private boolean herido = false;
 	   private int tiempoHeridoMax=50;
 	   private int tiempoHerido;
 	   
-	   public Tarro(Texture tex, Sound ss) {
-		   bucketImage = tex;
-		   sonidoHerido = ss;
+	   private Potenciador actualPowerUp = null;
+	   private boolean inmune = false;
+	   
+	   private Sound shieldEndSound; 
+	   private Sound speedEndSound;
+	   
+	   public Tarro(Texture tex, Sound ss, Sound shieldEnd, Sound speedEnd) {
+		   this.bucketImage = tex;
+		   this.sonidoHerido = ss;
+		   this.shieldEndSound = shieldEnd;
+	       this.speedEndSound = speedEnd;
 	   }
+	   
+	   public Potenciador getActualPowerUp() {
+		    return actualPowerUp;
+		}
 	   
 		public int getVidas() {
 			return vidas;
@@ -39,6 +52,17 @@ public class Tarro {
 			puntos+=pp;
 		}
 		
+		public int getVelocidadOriginal() {
+            return VELX_ORIGINAL;
+        }
+		
+		public void setVelocidad(int nuevaVelx) {
+            this.velx = nuevaVelx;
+        }
+		
+		public void setInmune(boolean estado) {
+            this.inmune = estado;
+        }
 	
 	   public void crear() {
 
@@ -48,6 +72,27 @@ public class Tarro {
 		      bucket.width = 64;
 		      bucket.height = 64;
 	   }
+	   
+	   public void reproducirSonidoFin(Potenciador powerUp)
+	   {
+	        if (powerUp instanceof Escudo)
+	        {
+	            shieldEndSound.play();
+	        } else if (powerUp instanceof SuperVelocidad) {
+	            speedEndSound.play();
+	        }
+	   }
+	   
+	   public void setPowerUp(Potenciador newPowerUp) {
+           // 1. Revertir el anterior si existe (el revertir maneja el sonido de fin)
+           if (this.actualPowerUp != null) {
+               this.actualPowerUp.revertir(this); 
+           }
+           // 2. Asignar el nuevo y aplicarlo
+           this.actualPowerUp = newPowerUp;
+           this.actualPowerUp.aplicar(this);
+       }
+	   
 	   public void dañar() {
 		  vidas--;
 		  herido = true;
