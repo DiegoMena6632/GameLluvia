@@ -1,33 +1,67 @@
-# Proyecto  GameLluvia
+# Modificación Proyecto GameLluvia
 
-A [libGDX](https://libgdx.com/) project generated with [gdx-liftoff](https://github.com/libgdx/gdx-liftoff).
+Este proyecto es una modificación del juego "GameLluvia" para la asignatura Programación Avanzada (ICI2241). El objetivo principal es refactorizar la base del juego aplicando principios de Programación Orientada a Objetos (POO), herencia e interfaces para añadir nuevas mecánicas de *power-ups*.
 
-This project was generated with a template including simple application launchers and an `ApplicationAdapter` extension that draws libGDX logo.
+## Descripción del Juego
 
-## Platforms
+GameLluvia es una aplicación de destreza y reflejos basada en el motor `libGDX`. El objetivo del jugador es controlar un "tarro" en la parte inferior de la pantalla para recolectar la mayor cantidad de "Gotas Buenas" (azules) posibles, mientras evita las "Gotas Malas" (rojas) que restan vidas.
 
-- `core`: Main module with the application logic shared by all platforms.
-- `lwjgl3`: Primary desktop platform using LWJGL3; was called 'desktop' in older docs.
+Esta versión añade nuevas entidades:
+* **Gota Escudo:** Otorga inmunidad temporal.
+* **Gota SuperVelocidad:** Duplica la velocidad del tarro temporalmente.
 
-## Gradle
+## Tecnologías Utilizadas
 
-This project uses [Gradle](https://gradle.org/) to manage dependencies.
-The Gradle wrapper was included, so you can run Gradle tasks using `gradlew.bat` or `./gradlew` commands.
-Useful Gradle tasks and flags:
+* **Lenguaje:** Java (Oracle JDK 11)
+* **Motor Gráfico:** libGDX
+* **IDE (Requerido):** Eclipse
+* **Entrega:** Archivo `.zip` del proyecto.
 
-- `--continue`: when using this flag, errors will not stop the tasks from running.
-- `--daemon`: thanks to this flag, Gradle daemon will be used to run chosen tasks.
-- `--offline`: when using this flag, cached dependency archives will be used.
-- `--refresh-dependencies`: this flag forces validation of all dependencies. Useful for snapshot versions.
-- `build`: builds sources and archives of every project.
-- `cleanEclipse`: removes Eclipse project data.
-- `cleanIdea`: removes IntelliJ project data.
-- `clean`: removes `build` folders, which store compiled classes and built archives.
-- `eclipse`: generates Eclipse project data.
-- `idea`: generates IntelliJ project data.
-- `lwjgl3:jar`: builds application's runnable jar, which can be found at `lwjgl3/build/libs`.
-- `lwjgl3:run`: starts the application.
-- `test`: runs unit tests (if any).
+---
 
-Note that most tasks that are not specific to a single project can be run with `name:` prefix, where the `name` should be replaced with the ID of a specific project.
-For example, `core:clean` removes `build` folder only from the `core` project.
+## Instrucciones de Instalación y Ejecución
+
+Sigue estos pasos para importar y ejecutar el proyecto en **Eclipse IDE** usando el archivo `.zip` proporcionado.
+
+### 1. Requisitos Previos
+
+* Tener **Eclipse IDE** instalado (versión compatible con JDK 11).
+* Tener **Oracle JDK 11** instalado y configurado en Eclipse.
+
+### 2. Instalación (Importar desde .zip)
+
+1.  **Descargar** el archivo `.zip` que contiene el proyecto.
+2.  **Descomprimir** el archivo `.zip` en una ubicación de fácil acceso (por ejemplo: `C:\Users\TuUsuario\EclipseProjects\GameLluvia`).
+
+3.  **Abrir Eclipse IDE**.
+
+4.  **Importar el proyecto:**
+    * Ve al menú superior: **File** -> **Import...**
+    * En la ventana que se abre, expande la carpeta **General**.
+    * Selecciona **"Existing Projects into Workspace"** y haz clic en **Next**.
+    * En la siguiente pantalla, haz clic en **"Select root directory"** y luego en **"Browse..."**.
+    * Navega y selecciona la **carpeta principal** que descomprimiste en el paso 2 (la carpeta que contiene las sub-carpetas `core`, `desktop`, etc.).
+    * Eclipse debería detectar automáticamente los proyectos (ej. `core`, `desktop`). Asegúrate de que estén seleccionados en la lista "Projects".
+    * Haz clic en **Finish**.
+
+### 3. Ejecución en Eclipse
+
+1.  Una vez importado, busca la vista **"Package Explorer"** en Eclipse. Verás los proyectos listados (ej. `core`, `desktop`).
+
+2.  `libGDX` separa el código (`core`) del lanzador (`desktop`). **Debes ejecutar el lanzador `desktop`**.
+
+3.  Expande el proyecto/carpeta llamado **`desktop`** (o `GameLluvia-desktop`).
+
+4.  Navega hasta el código fuente: `src/main/java`.
+
+5.  Busca la clase **`DesktopLauncher.java`**.
+
+6.  Haz clic derecho en el archivo `DesktopLauncher.java` y selecciona: **"Run As"** -> **"2 Java Application"**.
+
+---
+
+## Autores
+
+* Diego Mena
+* Benjamín Vargas
+* Ashlee Cortés
