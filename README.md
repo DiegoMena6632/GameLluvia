@@ -47,7 +47,7 @@ Sigue estos pasos para importar y ejecutar el proyecto en **Eclipse IDE** usando
 
 1.  Una vez importado, busca la vista **"Package Explorer"** en Eclipse. Verás el projecto "GameLLuvia-main".
 
-3.  Expande el proyecto y se deben de seleccionar las siguientes carpetas (en el orden establecido) `lwgjl3`-`src`-`main`-`java`-`ayud`- `ejemplo`-`lwgjl3`.
+3.  Expande el proyecto y se deben de seleccionar las siguientes carpetas (en el orden establecido) `lwgjl3`->`src`->`main`->`java`->`ayud`-> `ejemplo`->`lwgjl3`.
 
 4.  Haz clic derecho en el archivo `Lwgjl3Launcher.java` y selecciona: **"Run As"** -> **"Run configuration"**.
 
