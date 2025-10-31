@@ -38,26 +38,22 @@ Sigue estos pasos para importar y ejecutar el proyecto en **Eclipse IDE** usando
 4.  **Importar el proyecto:**
     * Ve al menú superior: **File** -> **Import...**
     * En la ventana que se abre, expande la carpeta **General**.
-    * Selecciona **"Existing Projects into Workspace"** y haz clic en **Next**.
-    * En la siguiente pantalla, haz clic en **"Select root directory"** y luego en **"Browse..."**.
-    * Navega y selecciona la **carpeta principal** que descomprimiste en el paso 2 (la carpeta que contiene las sub-carpetas `core`, `desktop`, etc.).
-    * Eclipse debería detectar automáticamente los proyectos (ej. `core`, `desktop`). Asegúrate de que estén seleccionados en la lista "Projects".
+    * Selecciona **"Existing Gradle Projects "** y haz clic en **Next**.
+    * En la siguiente pantalla, haz clic en **"Project root directory"** y luego en **"Browse..."**.
+    * Navega y selecciona la **carpeta principal** que descomprimiste en el paso 2 .
     * Haz clic en **Finish**.
 
 ### 3. Ejecución en Eclipse
 
-1.  Una vez importado, busca la vista **"Package Explorer"** en Eclipse. Verás los proyectos listados (ej. `core`, `desktop`).
+1.  Una vez importado, busca la vista **"Package Explorer"** en Eclipse. Verás el projecto "GameLLuvia-main".
 
-2.  `libGDX` separa el código (`core`) del lanzador (`desktop`). **Debes ejecutar el lanzador `desktop`**.
+3.  Expande el proyecto y se deben de seleccionar las siguientes carpetas (en el orden establecido) `lwgjl3`-`src`-`main`-`java`-`ayud`- `ejemplo`-`lwgjl3`.
 
-3.  Expande el proyecto/carpeta llamado **`desktop`** (o `GameLluvia-desktop`).
+4.  Haz clic derecho en el archivo `Lwgjl3Launcher.java` y selecciona: **"Run As"** -> **"Run configuration"**.
 
-4.  Navega hasta el código fuente: `src/main/java`.
+5.  En el nuevo panel que aparecera tan solo se debe apretar el boton en la esquina inferior izquiera **"Run As"**.
 
-5.  Busca la clase **`DesktopLauncher.java`**.
-
-6.  Haz clic derecho en el archivo `DesktopLauncher.java` y selecciona: **"Run As"** -> **"2 Java Application"**.
-
+6.El juego empezara a ejecutarse.
 ---
 
 ## Autores
