@@ -51,9 +51,9 @@ Sigue estos pasos para importar y ejecutar el proyecto en **Eclipse IDE** usando
 
 4.  Haz clic derecho en el archivo `Lwgjl3Launcher.java` y selecciona: **"Run As"** -> **"Run configuration"**.
 
-5.  En el nuevo panel que aparecera tan solo se debe apretar el boton en la esquina inferior izquiera **"Run As"**.
+5.  En el nuevo panel que aparecera tan solo se debe apretar el boton en la esquina inferior izquiera **"Run As"** , de esa manera se ejecutara GameLLuvia.
 
-6.El juego empezara a ejecutarse.
+
 ---
 
 ## Autores
