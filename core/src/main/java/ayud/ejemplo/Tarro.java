@@ -69,8 +69,8 @@ public class Tarro {
 		      bucket = new Rectangle();
 		      bucket.x = 800 / 2 - 64 / 2;
 		      bucket.y = 20;
-		      bucket.width = 64;
-		      bucket.height = 64;
+		      bucket.width = 70;
+		      bucket.height = 70;
 	   }
 	   
 	   public void reproducirSonidoFin(Potenciador powerUp)
@@ -111,11 +111,15 @@ public class Tarro {
 		  }
 	   }
 	   public void dibujar(SpriteBatch batch) {
+		 float drawX = bucket.x;
+		 float drawY = bucket.y;
+		 float drawWidth = bucket.width; // 64
+		 float drawHeight = bucket.height; // 64
 		 if (!herido)  
-		   batch.draw(bucketImage, bucket.x, bucket.y);
+		   batch.draw(bucketImage, drawX, drawY, drawWidth, drawHeight);
 		 else {
 		
-		   batch.draw(bucketImage, bucket.x, bucket.y+ MathUtils.random(-5,5));
+		   batch.draw(bucketImage, drawX, drawY, drawWidth, drawHeight);
 		   tiempoHerido--;
 		   if (tiempoHerido<=0) herido = false;
 		 }
