@@ -8,29 +8,29 @@ public abstract class Droppable {
 	protected Rectangle bounds;
 	protected Texture texture;
 	protected float velocidadY;
+	protected EstrategiaMovimiento estrategia;
 	
-	public Droppable(float x, float y, String texturePath, float velocidadY)
+	public Droppable(float x, float y, String texturePath, float velocidadY , EstrategiaMovimiento estrategiaInicial)
 	{
 		this.bounds = new Rectangle(x, y, 64, 64);
 		this.texture = new Texture(Gdx.files.internal(texturePath));
 		this.velocidadY = velocidadY;
+		this.estrategia = estrategiaInicial;
 	}
 	
-	public void mover()
-	{
-		bounds.y -= velocidadY * Gdx.graphics.getDeltaTime();
-	}
+	public void mover() {
+        estrategia.mover(this);
+    }
 	
 	public void dibujar(SpriteBatch batch) {
         batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
     }
 	
-	//Método abstracto(las clases hijas deben definir su efecto) 
+	public Rectangle getBounds() { return bounds; }
+	public float getVelocidadY() {return velocidadY;}
+		
 	public abstract void aplicarEfecto(Tarro tarro);
 	
-	public Rectangle getBounds() {
-        return bounds;
-    }
 	
 	public void dispose() {
         texture.dispose();

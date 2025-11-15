@@ -8,7 +8,7 @@ public class GotaEscudo extends Droppable {
 
     public GotaEscudo(float x, float y, float velocidadY, Sound startSound) {
         // Llama al constructor padre con la ruta de la textura
-        super(x, y, "escudo.png", velocidadY); 
+        super(x, y, "escudo.png", velocidadY , new MovimientoZigZag(5f)); 
         this.startSound = startSound;
     }
 

@@ -9,7 +9,7 @@ public class GotaSuperVelocidad extends Droppable {
     public GotaSuperVelocidad(float x, float y, float velocidadY, Sound startSound) {
         // Llama al constructor padre con la ruta de la textura
         // Esta gota cae un poco más rápido (ej. 1.2f)
-        super(x, y, "rayo.png", velocidadY * 1.2f); 
+        super(x, y, "rayo.png", velocidadY * 1.2f , new MovimientoZigZag(5f)); 
         this.startSound = startSound;
     }
 
