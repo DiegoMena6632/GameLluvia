@@ -140,6 +140,6 @@ public class Tarro {
 	
    public boolean estaHerido() {
 	   return herido;
-   }
+   }	
 	   
 }
