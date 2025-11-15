@@ -104,6 +104,11 @@ public class Tarro {
 		  herido = true;
 		  tiempoHerido=tiempoHeridoMax;
 		  sonidoHerido.play();
+		  
+		  if (vidas <= 0) {
+			  // Se obtiene la única instancia y se establece el estado a Game Over
+			  GameState.getInstance().setGameOver(true); 
+		  }
 	   }
 	   public void dibujar(SpriteBatch batch) {
 		 if (!herido)  

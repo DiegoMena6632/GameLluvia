@@ -69,6 +69,8 @@ public class Main extends ApplicationAdapter {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		
+		GameState state = GameState.getInstance();
+		
 		Potenciador currentPU = tarro.getActualPowerUp();
 		if (currentPU != null) {
 		    // 1. Reduce el tiempo restante del power-up
@@ -88,12 +90,22 @@ public class Main extends ApplicationAdapter {
 		font.draw(batch, "Gotas totales: " + tarro.getPuntos(), 5, 475);
 		font.draw(batch, "Vidas : " + tarro.getVidas(), 720, 475);
 		
-		if (!tarro.estaHerido()) {
-			// movimiento del tarro desde teclado
-	        tarro.actualizarMovimiento();        
-			// caida de la lluvia 
-	        lluvia.actualizarMovimiento(tarro);	   
-		}
+		if(!state.isGameOver()) {	
+			if (!tarro.estaHerido()) {
+				// movimiento del tarro desde teclado
+				tarro.actualizarMovimiento();        
+				// caida de la lluvia 
+				lluvia.actualizarMovimiento(tarro);	   
+			}
+		} else {
+	        // Lógica de fin de juego (si el Singleton dice que terminó)
+
+	        state.setHighScore(tarro.getPuntos()); 
+	        
+	        // Mostrar mensaje de Game Over y puntaje final
+	        font.draw(batch, "¡GAME OVER!", 350, 240);
+	        font.draw(batch, "Puntuación Final: " + state.getHighScore(), 310, 200);
+	    }
 		
 		tarro.dibujar(batch);
 		lluvia.actualizarDibujoLluvia(batch);
