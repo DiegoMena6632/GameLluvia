@@ -69,8 +69,8 @@ public class Tarro {
 		      bucket = new Rectangle();
 		      bucket.x = 800 / 2 - 64 / 2;
 		      bucket.y = 20;
-		      bucket.width = 70;
-		      bucket.height = 70;
+		      bucket.width = 80;
+		      bucket.height = 80;
 	   }
 	   
 	   public void reproducirSonidoFin(Potenciador powerUp)
