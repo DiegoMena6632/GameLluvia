@@ -81,6 +81,7 @@ public class Main extends ApplicationAdapter {
 		//actualizar 
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
+		batch.draw(lluvia.getFondo(), 0, 0, 800, 480);
 		
 		GameState state = GameState.getInstance();
 		

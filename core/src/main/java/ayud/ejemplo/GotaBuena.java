@@ -7,8 +7,8 @@ public class GotaBuena extends Droppable {
 
     private Sound dropSound;
 
-    public GotaBuena(float x, float y, Sound dropSound, float velocidadY) {
-        super(x, y, "drop.png", velocidadY , new MovimientoRecto());
+    public GotaBuena(float x, float y, Sound dropSound, float velocidadY, String PNG) {
+        super(x, y, PNG, velocidadY , new MovimientoRecto());
         this.dropSound = dropSound; 
     }
 

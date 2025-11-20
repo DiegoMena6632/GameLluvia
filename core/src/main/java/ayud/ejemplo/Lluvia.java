@@ -19,6 +19,8 @@ public class Lluvia {
     private Tarro tarro; // Referencia al Tarro
     private Sound shieldStartSound;
     private Sound speedStartSound;
+    private DroppableFactory factory;
+    private Texture fondo;
 	   
 	public Lluvia(Tarro tarro, Sound ss, Music mm, Sound shieldStartSound, Sound speedStartSound) {
 		this.tarro = tarro;
@@ -29,6 +31,19 @@ public class Lluvia {
 	}
 	
 	public void crear() {
+		
+		int randomiser = MathUtils.random(1, 2);
+		if(randomiser == 1)
+		{
+			factory = new PatioFactory();
+			fondo = new Texture("patio.png");
+		}
+		else
+		{
+			factory = new CocinaFactory();
+			fondo = new Texture("cocina.png");
+		}
+		
 		// Inicializamos el Array con el tipo abstracto Droppable
 		objetosCayendo = new Array<>(); 
 		crearGotaDeLluvia();
@@ -44,15 +59,20 @@ public class Lluvia {
 	    int tipo = MathUtils.random(1, 25); // Probabilidad de Power-up: 1 de cada 15 (aprox 6.6%)
 	      
 	    if (tipo < 3) {	    	  
-	        objetosCayendo.add(new GotaMala(x, y, velocidad));
+	        objetosCayendo.add(factory.crearGotaMala(x, y, velocidad));
 	    } else if (tipo == 24) { // Gota de Escudo
-	        objetosCayendo.add(new GotaEscudo(x, y, velocidad, shieldStartSound));
+	        objetosCayendo.add(factory.crearEscudo(x, y, shieldStartSound, velocidad));
         } else if (tipo == 25) { // Gota de SuperVelocidad
-	        objetosCayendo.add(new GotaSuperVelocidad(x, y, velocidad, speedStartSound));
+	        objetosCayendo.add(factory.crearSuperVelocidad(x, y,speedStartSound,velocidad));
 	    } else { 
-	        objetosCayendo.add(new GotaBuena(x, y, dropSound, velocidad));
+	        objetosCayendo.add(factory.crearGotaBuena(x, y, dropSound, velocidad));
 	    }
 	    lastDropTime = TimeUtils.nanoTime();
+	}
+	
+	public Texture getFondo()
+	{
+		return fondo;
 	}
 	
    public void actualizarMovimiento(Tarro tarro) { 
@@ -94,6 +114,7 @@ public class Lluvia {
    public void destruir() {
 	      dropSound.dispose();
 	      rainMusic.dispose();
+	      fondo.dispose();
 	      
 	      for (Droppable objeto : objetosCayendo) {
 	          objeto.dispose();
