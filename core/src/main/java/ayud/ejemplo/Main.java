@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.Array;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends ApplicationAdapter {
@@ -24,6 +25,13 @@ public class Main extends ApplicationAdapter {
 	   
 	private Tarro tarro;
 	private Lluvia lluvia;
+	
+	private Array<Logro> misLogros;
+    private String mensajeLogroActual = ""; 
+    private float tiempoMensaje = 0;
+    
+    
+	
 	@Override
 	public void create ()
 	{
@@ -45,6 +53,11 @@ public class Main extends ApplicationAdapter {
       
 	    Music rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
         lluvia = new Lluvia(tarro, dropSound, rainMusic, shieldStartSound, speedStartSound);
+        
+        misLogros = new Array<>();
+        misLogros.add(new LogroPrimerosPuntos());
+        misLogros.add(new LogroCasiMuerto());
+ 
 	      
 	    // camera
 	    camera = new OrthographicCamera();
@@ -89,6 +102,26 @@ public class Main extends ApplicationAdapter {
 		//dibujar textos
 		font.draw(batch, "Gotas totales: " + tarro.getPuntos(), 5, 475);
 		font.draw(batch, "Vidas : " + tarro.getVidas(), 720, 475);
+		
+		if(!state.isGameOver()) {   
+            for (Logro logro : misLogros) {
+                
+                if (logro.verificar(tarro)) {
+                    mensajeLogroActual = "LOGRO: " + logro.getNombre();
+                    tiempoMensaje = 3.0f; 
+                }
+            }
+       }
+		
+		if (tiempoMensaje > 0) {
+            
+            font.setColor(1, 1, 0, 1); // Amarillo
+            font.draw(batch, mensajeLogroActual, 300, 240);
+            font.setColor(1, 1, 1, 1); // Volver a blanco para lo demás
+            
+            // Restar tiempo
+            tiempoMensaje -= Gdx.graphics.getDeltaTime();
+        }
 		
 		if(!state.isGameOver()) {	
 			if (!tarro.estaHerido()) {
