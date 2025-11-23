@@ -114,6 +114,20 @@ public class Main extends ApplicationAdapter {
             }
        }
 		
+		if (tarro.esInmune()) {
+		    // CASO 1: ESCUDO ACTIVO
+		    font.setColor(1, 0, 0, 1); // Color CIAN (Brillante)
+		    font.draw(batch, "ESCUDO: ON", 380, 475);
+		} else {
+		    // CASO 2: ESCUDO INACTIVO
+		    font.setColor(0.5f, 0.5f, 0.5f, 1); // Color GRIS (Apagado)
+		    // O si prefieres rojo: font.setColor(1, 0, 0, 1); 
+		    font.draw(batch, "ESCUDO: OFF", 380, 475);
+		}
+
+		// 3. IMPORTANTE: Restaurar color BLANCO para lo siguiente
+		font.setColor(1, 1, 1, 1);
+		
 		if (tiempoMensaje > 0) {
             
             font.setColor(1, 1, 0, 1); // Amarillo

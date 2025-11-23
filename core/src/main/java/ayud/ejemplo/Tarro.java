@@ -150,5 +150,10 @@ public class Tarro {
    public boolean estaHerido() {
 	   return herido;
    }	
+   
+   public boolean esInmune() {
+	    return inmune;
+   }  
+   
 	   
 }
